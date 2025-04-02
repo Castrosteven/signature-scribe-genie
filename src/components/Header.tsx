@@ -19,12 +19,6 @@ const Header = () => {
           >
             Signature Generator
           </Button>
-          <Button 
-            variant="ghost" 
-            onClick={() => navigate("/custom-layout")}
-          >
-            Custom Layout
-          </Button>
         </nav>
       </div>
     </header>

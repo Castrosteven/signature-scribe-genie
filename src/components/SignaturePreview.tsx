@@ -540,7 +540,6 @@ const SignaturePreview = ({ signatureData }: SignaturePreviewProps) => {
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h3 className="text-lg font-medium">Your Signature</h3>
         <div className="flex gap-2">
           <Select value={layout} onValueChange={handleLayoutChange}>
             <SelectTrigger className="w-[180px]">
@@ -555,14 +554,15 @@ const SignaturePreview = ({ signatureData }: SignaturePreviewProps) => {
               <SelectItem value="classic">Classic</SelectItem>
             </SelectContent>
           </Select>
-          <Button onClick={copyToClipboard} variant="outline" size="sm">
+          
+        </div>
+        <Button onClick={copyToClipboard} variant="outline" size="sm">
             <Copy className="h-4 w-4 mr-2" />
             Copy to Clipboard
           </Button>
-        </div>
       </div>
       
-      <div className="border p-6 rounded-md bg-white">
+      <div className="border p-6 rounded-md bg-white flex items-center justify-center">
         <div ref={signatureRef} className="font-sans text-sm">
           {renderSignature()}
         </div>
@@ -576,3 +576,5 @@ const SignaturePreview = ({ signatureData }: SignaturePreviewProps) => {
 };
 
 export default SignaturePreview;
+
+
