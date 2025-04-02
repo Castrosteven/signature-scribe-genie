@@ -21,7 +21,7 @@ const Index = () => {
     instagram: "",
     showSocial: true,
     avatarUrl: "",
-    layout: "horizontal" as "horizontal" | "vertical",
+    layout: "horizontal" as "horizontal" | "vertical" | "compact" | "modern" | "minimal" | "classic",
   });
 
   const getInitials = (name: string) => {
