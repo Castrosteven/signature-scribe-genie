@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://castrosteven.github.io/signature-scribe-genie/",
+  "homepage": "https://castrosteven.github.io/signature-scribe-genie",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
