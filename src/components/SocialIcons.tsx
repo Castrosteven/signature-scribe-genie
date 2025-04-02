@@ -14,7 +14,7 @@ const SocialIcons = ({ linkedin, twitter, facebook, instagram }: SocialIconsProp
   const iconClass = "text-gray-600 hover:text-gray-900 transition-colors";
   
   return (
-    <div className="flex gap-3">
+    <div className="flex gap-3 items-center justify-center">
       {linkedin && (
         <a
           href={linkedin}

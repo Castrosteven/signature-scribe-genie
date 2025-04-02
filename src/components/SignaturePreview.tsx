@@ -3,7 +3,6 @@ import React from "react";
 import SocialIcons from "./SocialIcons";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Copy } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 
@@ -22,6 +21,7 @@ interface SignaturePreviewProps {
     instagram: string;
     showSocial: boolean;
     avatarUrl: string;
+    layout: "horizontal" | "vertical";
   };
 }
 
@@ -57,6 +57,176 @@ const SignaturePreview = ({ signatureData }: SignaturePreviewProps) => {
     return getInitials(signatureData.name);
   };
 
+  const renderHorizontalSignature = () => (
+    <table cellPadding="0" cellSpacing="0" style={{ maxWidth: "500px" }}>
+      <tbody>
+        <tr>
+          <td style={{ verticalAlign: "top", paddingRight: "15px" }}>
+            {signatureData.avatarUrl ? (
+              <Avatar className="h-20 w-20">
+                <AvatarImage src={signatureData.avatarUrl} alt={signatureData.name} />
+                <AvatarFallback>{getNameInitials()}</AvatarFallback>
+              </Avatar>
+            ) : (
+              <Avatar className="h-20 w-20">
+                <AvatarFallback>{getNameInitials()}</AvatarFallback>
+              </Avatar>
+            )}
+          </td>
+          <td style={{ verticalAlign: "top", borderLeft: "2px solid #e2e8f0", paddingLeft: "15px" }}>
+            <table cellPadding="0" cellSpacing="0">
+              <tbody>
+                <tr>
+                  <td>
+                    <div style={{ margin: "0 0 5px", fontWeight: "bold", fontSize: "16px", color: "#333" }}>
+                      {signatureData.name}
+                    </div>
+                    <div style={{ margin: "0 0 5px", color: "#718096", fontSize: "14px" }}>
+                      {signatureData.title} {signatureData.company && `| ${signatureData.company}`}
+                    </div>
+
+                    <div style={{ margin: "15px 0 10px" }}>
+                      {signatureData.phone && (
+                        <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                          <strong>P:</strong> {signatureData.phone}
+                        </div>
+                      )}
+                      {signatureData.email && (
+                        <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                          <strong>E:</strong>{" "}
+                          <a
+                            href={`mailto:${signatureData.email}`}
+                            style={{ color: "#3182CE", textDecoration: "none" }}
+                          >
+                            {signatureData.email}
+                          </a>
+                        </div>
+                      )}
+                      {signatureData.website && (
+                        <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                          <strong>W:</strong>{" "}
+                          <a
+                            href={
+                              signatureData.website.startsWith("http")
+                                ? signatureData.website
+                                : `https://${signatureData.website}`
+                            }
+                            style={{ color: "#3182CE", textDecoration: "none" }}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {signatureData.website}
+                          </a>
+                        </div>
+                      )}
+                      {signatureData.address && (
+                        <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                          <strong>A:</strong> {signatureData.address}
+                        </div>
+                      )}
+                    </div>
+
+                    {signatureData.showSocial && (
+                      <div style={{ marginTop: "10px" }}>
+                        <SocialIcons
+                          linkedin={signatureData.linkedin}
+                          twitter={signatureData.twitter}
+                          facebook={signatureData.facebook}
+                          instagram={signatureData.instagram}
+                        />
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+
+  const renderVerticalSignature = () => (
+    <table cellPadding="0" cellSpacing="0" style={{ maxWidth: "300px" }}>
+      <tbody>
+        <tr>
+          <td style={{ textAlign: "center", paddingBottom: "15px" }}>
+            {signatureData.avatarUrl ? (
+              <Avatar className="h-24 w-24 mx-auto">
+                <AvatarImage src={signatureData.avatarUrl} alt={signatureData.name} />
+                <AvatarFallback>{getNameInitials()}</AvatarFallback>
+              </Avatar>
+            ) : (
+              <Avatar className="h-24 w-24 mx-auto">
+                <AvatarFallback>{getNameInitials()}</AvatarFallback>
+              </Avatar>
+            )}
+          </td>
+        </tr>
+        <tr>
+          <td style={{ borderTop: "2px solid #e2e8f0", paddingTop: "15px", textAlign: "center" }}>
+            <div style={{ margin: "0 0 5px", fontWeight: "bold", fontSize: "16px", color: "#333" }}>
+              {signatureData.name}
+            </div>
+            <div style={{ margin: "0 0 15px", color: "#718096", fontSize: "14px" }}>
+              {signatureData.title} {signatureData.company && `| ${signatureData.company}`}
+            </div>
+
+            <div style={{ margin: "0 0 15px", textAlign: "center" }}>
+              {signatureData.phone && (
+                <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                  {signatureData.phone}
+                </div>
+              )}
+              {signatureData.email && (
+                <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                  <a
+                    href={`mailto:${signatureData.email}`}
+                    style={{ color: "#3182CE", textDecoration: "none" }}
+                  >
+                    {signatureData.email}
+                  </a>
+                </div>
+              )}
+              {signatureData.website && (
+                <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                  <a
+                    href={
+                      signatureData.website.startsWith("http")
+                        ? signatureData.website
+                        : `https://${signatureData.website}`
+                    }
+                    style={{ color: "#3182CE", textDecoration: "none" }}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {signatureData.website}
+                  </a>
+                </div>
+              )}
+              {signatureData.address && (
+                <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
+                  {signatureData.address}
+                </div>
+              )}
+            </div>
+
+            {signatureData.showSocial && (
+              <div style={{ margin: "15px 0 0", display: "flex", justifyContent: "center" }}>
+                <SocialIcons
+                  linkedin={signatureData.linkedin}
+                  twitter={signatureData.twitter}
+                  facebook={signatureData.facebook}
+                  instagram={signatureData.instagram}
+                />
+              </div>
+            )}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  );
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -69,92 +239,7 @@ const SignaturePreview = ({ signatureData }: SignaturePreviewProps) => {
       
       <div className="border p-6 rounded-md bg-white">
         <div ref={signatureRef} className="font-sans text-sm">
-          <table cellPadding="0" cellSpacing="0" style={{ maxWidth: "500px" }}>
-            <tbody>
-              <tr>
-                <td style={{ verticalAlign: "top", paddingRight: "15px" }}>
-                  {signatureData.avatarUrl ? (
-                    <Avatar className="h-20 w-20">
-                      <AvatarImage src={signatureData.avatarUrl} alt={signatureData.name} />
-                      <AvatarFallback>{getNameInitials()}</AvatarFallback>
-                    </Avatar>
-                  ) : (
-                    <Avatar className="h-20 w-20">
-                      <AvatarFallback>{getNameInitials()}</AvatarFallback>
-                    </Avatar>
-                  )}
-                </td>
-                <td style={{ verticalAlign: "top", borderLeft: "2px solid #e2e8f0", paddingLeft: "15px" }}>
-                  <table cellPadding="0" cellSpacing="0">
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div style={{ margin: "0 0 5px", fontWeight: "bold", fontSize: "16px", color: "#333" }}>
-                            {signatureData.name}
-                          </div>
-                          <div style={{ margin: "0 0 5px", color: "#718096", fontSize: "14px" }}>
-                            {signatureData.title} {signatureData.company && `| ${signatureData.company}`}
-                          </div>
-
-                          <div style={{ margin: "15px 0 10px" }}>
-                            {signatureData.phone && (
-                              <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
-                                <strong>P:</strong> {signatureData.phone}
-                              </div>
-                            )}
-                            {signatureData.email && (
-                              <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
-                                <strong>E:</strong>{" "}
-                                <a
-                                  href={`mailto:${signatureData.email}`}
-                                  style={{ color: "#3182CE", textDecoration: "none" }}
-                                >
-                                  {signatureData.email}
-                                </a>
-                              </div>
-                            )}
-                            {signatureData.website && (
-                              <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
-                                <strong>W:</strong>{" "}
-                                <a
-                                  href={
-                                    signatureData.website.startsWith("http")
-                                      ? signatureData.website
-                                      : `https://${signatureData.website}`
-                                  }
-                                  style={{ color: "#3182CE", textDecoration: "none" }}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                >
-                                  {signatureData.website}
-                                </a>
-                              </div>
-                            )}
-                            {signatureData.address && (
-                              <div style={{ margin: "0 0 4px", color: "#4A5568", fontSize: "13px" }}>
-                                <strong>A:</strong> {signatureData.address}
-                              </div>
-                            )}
-                          </div>
-
-                          {signatureData.showSocial && (
-                            <div style={{ marginTop: "10px" }}>
-                              <SocialIcons
-                                linkedin={signatureData.linkedin}
-                                twitter={signatureData.twitter}
-                                facebook={signatureData.facebook}
-                                instagram={signatureData.instagram}
-                              />
-                            </div>
-                          )}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          {signatureData.layout === "horizontal" ? renderHorizontalSignature() : renderVerticalSignature()}
         </div>
       </div>
       

@@ -4,6 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { LayoutGrid, LayoutList } from "lucide-react";
 
 interface SignatureFormProps {
   signatureData: {
@@ -20,6 +22,7 @@ interface SignatureFormProps {
     instagram: string;
     showSocial: boolean;
     avatarUrl: string;
+    layout: "horizontal" | "vertical";
   };
   setSignatureData: React.Dispatch<
     React.SetStateAction<{
@@ -36,6 +39,7 @@ interface SignatureFormProps {
       instagram: string;
       showSocial: boolean;
       avatarUrl: string;
+      layout: "horizontal" | "vertical";
     }>
   >;
 }
@@ -56,9 +60,30 @@ const SignatureForm = ({ signatureData, setSignatureData }: SignatureFormProps) 
     }));
   };
 
+  const handleLayoutChange = (value: string) => {
+    setSignatureData((prev) => ({
+      ...prev,
+      layout: value as "horizontal" | "vertical",
+    }));
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <h3 className="text-lg font-medium">Layout</h3>
+          <ToggleGroup type="single" value={signatureData.layout} onValueChange={handleLayoutChange}>
+            <ToggleGroupItem value="horizontal" aria-label="Horizontal layout">
+              <LayoutList size={18} />
+            </ToggleGroupItem>
+            <ToggleGroupItem value="vertical" aria-label="Vertical layout">
+              <LayoutGrid size={18} />
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+        
+        <Separator />
+        
         <h3 className="text-lg font-medium">Personal Information</h3>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="space-y-2">
@@ -131,16 +156,6 @@ const SignatureForm = ({ signatureData, setSignatureData }: SignatureFormProps) 
             value={signatureData.address}
             onChange={handleChange}
             placeholder="123 Business Ave, Suite 100, New York, NY 10001"
-          />
-        </div>
-        <div className="space-y-2">
-          <Label htmlFor="avatarUrl">Avatar URL (optional)</Label>
-          <Input
-            id="avatarUrl"
-            name="avatarUrl"
-            value={signatureData.avatarUrl}
-            onChange={handleChange}
-            placeholder="https://example.com/avatar.jpg"
           />
         </div>
       </div>

@@ -21,6 +21,7 @@ const Index = () => {
     instagram: "",
     showSocial: true,
     avatarUrl: "",
+    layout: "horizontal" as "horizontal" | "vertical",
   });
 
   const getInitials = (name: string) => {
