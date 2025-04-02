@@ -5,6 +5,8 @@ import SignaturePreview from "@/components/SignaturePreview";
 import ImageUpload from "@/components/ImageUpload";
 import { Card, CardContent } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const Index = () => {
   const [signatureData, setSignatureData] = React.useState({
@@ -40,51 +42,55 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10">
-          <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">
-            Email Signature Generator
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-lg text-gray-600 sm:text-xl">
-            Create professional email signatures in seconds
-          </p>
-        </div>
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-gray-50 to-gray-100">
+      <Header />
+      <div className="flex-grow py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10">
+            <h1 className="text-4xl font-bold text-gray-900 sm:text-5xl">
+              Email Signature Generator
+            </h1>
+            <p className="mt-3 max-w-md mx-auto text-lg text-gray-600 sm:text-xl">
+              Create professional email signatures in seconds
+            </p>
+          </div>
 
-        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex flex-col gap-6">
-                <h2 className="text-2xl font-semibold text-center">Design Your Signature</h2>
-                
-                <div className="flex justify-center mb-4">
-                  <ImageUpload 
-                    value={signatureData.avatarUrl} 
-                    onChange={handleAvatarChange}
-                    initials={getInitials(signatureData.name)}
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex flex-col gap-6">
+                  <h2 className="text-2xl font-semibold text-center">Design Your Signature</h2>
+                  
+                  <div className="flex justify-center mb-4">
+                    <ImageUpload 
+                      value={signatureData.avatarUrl} 
+                      onChange={handleAvatarChange}
+                      initials={getInitials(signatureData.name)}
+                    />
+                  </div>
+                  
+                  <Separator />
+                  
+                  <SignatureForm 
+                    signatureData={signatureData}
+                    setSignatureData={setSignatureData}
                   />
                 </div>
-                
-                <Separator />
-                
-                <SignatureForm 
-                  signatureData={signatureData}
-                  setSignatureData={setSignatureData}
-                />
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex flex-col gap-6">
-                <h2 className="text-2xl font-semibold text-center">Preview</h2>
-                <SignaturePreview signatureData={signatureData} />
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardContent className="pt-6">
+                <div className="flex flex-col gap-6">
+                  <h2 className="text-2xl font-semibold text-center">Preview</h2>
+                  <SignaturePreview signatureData={signatureData} />
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
