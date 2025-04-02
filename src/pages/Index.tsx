@@ -2,8 +2,9 @@
 import React from "react";
 import SignatureForm from "@/components/SignatureForm";
 import SignaturePreview from "@/components/SignaturePreview";
+import ImageUpload from "@/components/ImageUpload";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
 
 const Index = () => {
   const [signatureData, setSignatureData] = React.useState({
@@ -22,6 +23,21 @@ const Index = () => {
     avatarUrl: "",
   });
 
+  const getInitials = (name: string) => {
+    const names = name.split(" ");
+    if (names.length >= 2) {
+      return `${names[0][0]}${names[1][0]}`;
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
+  const handleAvatarChange = (avatarUrl: string) => {
+    setSignatureData(prev => ({
+      ...prev,
+      avatarUrl
+    }));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
@@ -34,30 +50,38 @@ const Index = () => {
           </p>
         </div>
 
-        <div className="mt-10">
-          <Tabs defaultValue="edit" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto mb-6 grid-cols-2">
-              <TabsTrigger value="edit">Edit</TabsTrigger>
-              <TabsTrigger value="preview">Preview</TabsTrigger>
-            </TabsList>
-            <TabsContent value="edit">
-              <Card>
-                <CardContent className="pt-6">
-                  <SignatureForm 
-                    signatureData={signatureData}
-                    setSignatureData={setSignatureData}
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex flex-col gap-6">
+                <h2 className="text-2xl font-semibold text-center">Design Your Signature</h2>
+                
+                <div className="flex justify-center mb-4">
+                  <ImageUpload 
+                    value={signatureData.avatarUrl} 
+                    onChange={handleAvatarChange}
+                    initials={getInitials(signatureData.name)}
                   />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            <TabsContent value="preview">
-              <Card>
-                <CardContent className="pt-6">
-                  <SignaturePreview signatureData={signatureData} />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+                </div>
+                
+                <Separator />
+                
+                <SignatureForm 
+                  signatureData={signatureData}
+                  setSignatureData={setSignatureData}
+                />
+              </div>
+            </CardContent>
+          </Card>
+          
+          <Card>
+            <CardContent className="pt-6">
+              <div className="flex flex-col gap-6">
+                <h2 className="text-2xl font-semibold text-center">Preview</h2>
+                <SignaturePreview signatureData={signatureData} />
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>

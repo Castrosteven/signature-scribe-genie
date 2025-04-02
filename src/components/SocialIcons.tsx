@@ -11,16 +11,16 @@ interface SocialIconsProps {
 
 const SocialIcons = ({ linkedin, twitter, facebook, instagram }: SocialIconsProps) => {
   const iconSize = 16;
-  const iconColor = "#4A5568";
+  const iconClass = "text-gray-600 hover:text-gray-900 transition-colors";
   
   return (
-    <div style={{ display: "flex", gap: "10px" }}>
+    <div className="flex gap-3">
       {linkedin && (
         <a
           href={linkedin}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: iconColor }}
+          className={iconClass}
         >
           <Linkedin size={iconSize} />
         </a>
@@ -30,7 +30,7 @@ const SocialIcons = ({ linkedin, twitter, facebook, instagram }: SocialIconsProp
           href={twitter}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: iconColor }}
+          className={iconClass}
         >
           <Twitter size={iconSize} />
         </a>
@@ -40,7 +40,7 @@ const SocialIcons = ({ linkedin, twitter, facebook, instagram }: SocialIconsProp
           href={facebook}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: iconColor }}
+          className={iconClass}
         >
           <Facebook size={iconSize} />
         </a>
@@ -50,7 +50,7 @@ const SocialIcons = ({ linkedin, twitter, facebook, instagram }: SocialIconsProp
           href={instagram}
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: iconColor }}
+          className={iconClass}
         >
           <Instagram size={iconSize} />
         </a>
